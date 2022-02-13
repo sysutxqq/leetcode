@@ -54,6 +54,7 @@ class Solution:
         return False                                                                                                                                                                                                                                                                                                                  
     
     def transferTree(self,root:TreeNode)->TreeNode:
+        return False
 
 
     #     #3. 递归
