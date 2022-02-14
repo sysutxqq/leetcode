@@ -6,6 +6,8 @@
 
 # @lc code=start
 # Definition for a binary tree node.
+
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -15,9 +17,6 @@ class TreeNode:
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
         #1. 层序遍历，看每一层是不是回文串
-
-
-        #2. 右子树翻转，看和左子树是不是一样
         if root == None:
             return True
         elif root.left == None or root.right == None:
@@ -25,6 +24,35 @@ class Solution:
                 return True
             return False
         else:
+            curLevelNode = [root]
+            numCurLevelNode = 1
+            while(curLevelNode):
+                subRes = []
+                while(numCurLevelNode != 0):
+                    curNode = curLevelNode.pop()
+                    if curNode == None:
+                        subRes.append(None)
+                        continue
+                    curLevelNode.append(curNode.left)
+                    curLevelNode.append(curNode.right)
+                    subRes.append(curNode.val)
+                    numCurLevelNode -= 1
+
+                tmpRes =  subRes
+                tmpRes.reverse()
+                if tmpRes != subRes:
+                    return False
+                numCurLevelNode = len(curLevelNode)
+
+        return True
+        #2. 右子树翻转，看和左子树是不是一样
+        # if root == None:
+        #     return True
+        # elif root.left == None or root.right == None:
+        #     if root.left == root.right:
+        #         return True
+        #     return False
+        # else:
             # rightRoot = [root.right]
             # transferRight = root.right
             # while(rightRoot):
@@ -39,9 +67,9 @@ class Solution:
             #             rightRoot.append(currNode.left)
             #         elif currNode.right:
             #             rightRoot.append(currNode.right)
-            self.transferTree(root.right)
-            res = self.cmpTree(root.left,root.right)
-            return res
+            # self.transferTree(root.right)
+            # res = self.cmpTree(root.left,root.right)
+            # return res
 
     #比较两棵树是否一样
     def cmpTree(self,leftTree:TreeNode,rightTree:TreeNode)->bool:
@@ -80,4 +108,8 @@ class Solution:
 
 
 # @lc code=end
+
+sol = Solution()
+root = TreeNode(1,TreeNode(2,TreeNode(3,None,None),TreeNode(4,None,None)),TreeNode(2,TreeNode(4,None,None),TreeNode(3,None,None)))
+res = sol.isSymmetric(root)
 
