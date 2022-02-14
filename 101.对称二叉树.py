@@ -25,24 +25,25 @@ class Solution:
                 return True
             return False
         else:
-            rightRoot = [root.right]
-            transferRight = root.right
-            while(rightRoot):
-                currNode = rightRoot.pop(0)
-                if currNode.left or currNode.right:
-                    currNode.left,currNode.right = currNode.right,currNode.left
+            # rightRoot = [root.right]
+            # transferRight = root.right
+            # while(rightRoot):
+            #     currNode = rightRoot.pop(0)
+            #     if currNode.left or currNode.right:
+            #         currNode.left,currNode.right = currNode.right,currNode.left
 
-                    if currNode.left and currNode.right:
-                        rightRoot.append(currNode.left)                 
-                        rightRoot.append(currNode.right)
-                    elif currNode.left:
-                        rightRoot.append(currNode.left)
-                    elif currNode.right:
-                        rightRoot.append(currNode.right)
-
-            res = self.cmpTree(root.left,transferRight)
+            #         if currNode.left and currNode.right:
+            #             rightRoot.append(currNode.left)                 
+            #             rightRoot.append(currNode.right)
+            #         elif currNode.left:
+            #             rightRoot.append(currNode.left)
+            #         elif currNode.right:
+            #             rightRoot.append(currNode.right)
+            self.transferTree(root.right)
+            res = self.cmpTree(root.left,root.right)
             return res
 
+    #比较两棵树是否一样
     def cmpTree(self,leftTree:TreeNode,rightTree:TreeNode)->bool:
         if rightTree == None or leftTree == None:
             if rightTree == leftTree:
@@ -53,8 +54,16 @@ class Solution:
             return self.cmpTree(rightTree.left,leftTree.left) and self.cmpTree(rightTree.right,leftTree.right)
         return False                                                                                                                                                                                                                                                                                                                  
     
+    #递归翻转树结构
     def transferTree(self,root:TreeNode)->TreeNode:
-        return False
+        if root == None:
+            return
+        else:
+            tmpNode = root.left
+            root.left = root.right
+            root.right = tmpNode
+            self.transferTree(root.right)
+            self.transferTree(root.left)
 
 
     #     #3. 递归
