@@ -29,19 +29,27 @@ class Solution:
             while(curLevelNode):
                 subRes = []
                 while(numCurLevelNode != 0):
-                    curNode = curLevelNode.pop()
+                    curNode = curLevelNode.pop(0)
                     if curNode == None:
                         subRes.append(None)
+                        numCurLevelNode -= 1
                         continue
                     curLevelNode.append(curNode.left)
                     curLevelNode.append(curNode.right)
                     subRes.append(curNode.val)
                     numCurLevelNode -= 1
-
-                tmpRes =  subRes
+                
+                tmpRes = subRes[:]
                 tmpRes.reverse()
                 if tmpRes != subRes:
                     return False
+
+                tmpNum = 0
+                for x in curLevelNode:
+                    if x == None:
+                        tmpNum += 1
+                if tmpNum == len(curLevelNode):
+                    break
                 numCurLevelNode = len(curLevelNode)
 
         return True
@@ -110,6 +118,6 @@ class Solution:
 # @lc code=end
 
 sol = Solution()
-root = TreeNode(1,TreeNode(2,TreeNode(3,None,None),TreeNode(4,None,None)),TreeNode(2,TreeNode(4,None,None),TreeNode(3,None,None)))
+root = TreeNode(1,TreeNode(2,None,TreeNode(3,None,None)),TreeNode(2,None,TreeNode(3,None,None)))
 res = sol.isSymmetric(root)
 
