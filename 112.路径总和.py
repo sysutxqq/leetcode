@@ -24,7 +24,7 @@ class Solution:
             return True
         return False
     
-    def hasPathSumHelper(self,root:TreeNode,sums:List[int])->List[int]:
+    def hasPathSumHelper(self,root:TreeNode,sums:List[int]):
         if root == None:
             return 0
         leftNode = root.left
@@ -36,4 +36,7 @@ class Solution:
             rightNode = self.hasPathSumHelper(root.right,sums) + rightNode.val
             sums.append(rightNode)
 # @lc code=end
+root = TreeNode(5,TreeNode(4,TreeNode(11,TreeNode(7),TreeNode(2))),TreeNode(8,TreeNode(13),TreeNode(4,None,TreeNode(1))))
+sol = Solution()
+res = sol.hasPathSum(root,22)
 
