@@ -18,23 +18,14 @@ class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if root == None:
             return False
-        res = []
-        self.hasPathSumHelper(root,res)
-        if targetSum in res:
-            return True
-        return False
-    
-    def hasPathSumHelper(self,root:TreeNode,sums:List[int]):
-        if root == None:
-            return 0
-        leftNode = root.left
-        if leftNode != None:
-            leftSum = self.hasPathSumHelper(root.left,sums) + leftNode.val
-            sums.append(leftSum)
-        rightNode = root.right
-        if rightNode != None:
-            rightNode = self.hasPathSumHelper(root.right,sums) + rightNode.val
-            sums.append(rightNode)
+        
+        if root.val == targetSum:
+            if root.left == None and root.right == None:
+                return True
+        leftRes = self.hasPathSum(root.left,targetSum - root.val)
+        rightRes =  self.hasPathSum(root.right,targetSum - root.val)
+        return leftRes or rightRes
+
 # @lc code=end
 root = TreeNode(5,TreeNode(4,TreeNode(11,TreeNode(7),TreeNode(2))),TreeNode(8,TreeNode(13),TreeNode(4,None,TreeNode(1))))
 sol = Solution()
