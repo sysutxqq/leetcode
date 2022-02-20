@@ -11,7 +11,7 @@ class MinStack:
         self.stack = []
 
     def push(self, val: int) -> None:
-        self.stack.append(val)
+        
 
     def pop(self) -> None:
 
