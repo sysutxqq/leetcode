@@ -16,15 +16,36 @@ class TreeNode:
         self.right = right
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        if root == None:
-            return False
         
+        #中序遍历
+        if root == None:
+            return
         if root.val == targetSum:
-            if root.left == None and root.right == None:
-                return True
-        leftRes = self.hasPathSum(root.left,targetSum - root.val)
-        rightRes =  self.hasPathSum(root.right,targetSum - root.val)
-        return leftRes or rightRes
+            return True
+        else:
+            self.hasPathSum(root.left,targetSum - root.val)
+            self.hasPathSum(root.right,targetSum - root.val)
+        return False
+
+        # if root == None:
+        #     return False
+        # res = []
+        # self.hasPathSumHelper(root,res)
+        # if targetSum in res:
+        #     return True
+        # return False
+    
+    def hasPathSumHelper(self,root:TreeNode,sums:List[int]):
+        leftNode = root.left
+        rightNode = root.right
+
+        if root.left == None and root.right == None:
+            return root.val
+        leftSum = self.hasPathSumHelper(leftNode,sums) + root.val
+        sums.append(leftSum)
+        rightSum = self.hasPathSumHelper(rightNode,sums) + root.val
+        sums.append(rightSum)
+        print("nothing returned")
 
 # @lc code=end
 root = TreeNode(5,TreeNode(4,TreeNode(11,TreeNode(7),TreeNode(2))),TreeNode(8,TreeNode(13),TreeNode(4,None,TreeNode(1))))

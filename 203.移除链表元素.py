@@ -6,8 +6,6 @@
 
 # @lc code=start
 # Definition for singly-linked list.
-from re import I
-
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -18,16 +16,25 @@ class Solution:
         if head == None:
             return None
         newHead = ListNode()
+        newHead.next = head
         curNode = newHead
-        while(head.next != None):
-            if head.val == val:
-                head = head.next
+        while(curNode.next):
+            if curNode.next.val == val:
+                curNode.next = curNode.next.next
             else:
-                curNode.next = head
                 curNode = curNode.next
-            head = head.next
+        return newHead.next
+        # while(head):
+        #     if head.val == val:
+        #         if head.next:
+        #             head = head.next
+        #         else:
+        #             head = head.next
+        #             curNode.next = head
+        #     else:
+        #         curNode.next = head
+        #         curNode = curNode.next
+        #         head = head.next
         return newHead.next
 # @lc code=end
-sol = Solution()
-head = ListNode(1,ListNode(2,ListNode(6,ListNode(3,ListNode(4,ListNode(5,ListNode(6)))))))
-res = sol.removeElements(head,6)
+
